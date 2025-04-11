@@ -17,18 +17,38 @@ from typing import List, Dict
 # The result should be in a dictionary where each data type is a separate key value pair
 def categorize_transactions(transactions: List[Dict]) -> Dict[str, float]:
     # TODO: Implement logic here
-    loan_revenue = 0
-    card_revenue = 0
-    refund = 0
-    other = 0
-    for txns in transaction:
-
-    return {
+    result = {
         "Loan Revenue": 0.0,
         "Card Revenue": 0.0,
         "Refund": 0.0,
         "Other": 0.0
     }
+    for txn in transactions:
+        t_type = txn.get("type", "")
+        amount = txn.get("amount", 0.0)
+
+        if t_type == "loan":
+            result["Loan Revenue"] += amount
+        elif t_type == "card":
+            result["Card Revenue"] += amount
+        elif amount < 0:
+            result["Refund"] += amount
+        else:
+            result["Other"] += amount
+
+    # Optional: Round everything to 2 decimal places
+    # Loops through all the keys in the result dictionary 
+    # result[category]
+    # Retrieves the total amount (float) associated with that category.
+    for category in result:
+        result[category] = round(result[category], 2)
+    return result
+    # return {
+    #     "Loan Revenue": 0.0,
+    #     "Card Revenue": 0.0,
+    #     "Refund": 0.0,
+    #     "Other": 0.0
+    # }
 # Test results:
 # Sample input: does not ouput info in correct format, assertion error
 # Negative card amount: 
